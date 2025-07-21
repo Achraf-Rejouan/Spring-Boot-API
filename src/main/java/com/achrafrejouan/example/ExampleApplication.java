@@ -8,7 +8,7 @@ public class ExampleApplication {
 
 	public static void main(String[] args) {
 		var ctx = SpringApplication.run(ExampleApplication.class, args);
-		MyFirstClass hello = ctx.getBean(MyFirstClass.class);
-		System.out.println(hello.sayHello());
+		MyFirstService myFirstService = ctx.getBean(MyFirstService.class);
+		System.out.println(myFirstService.tellAStory());
 	}
 }

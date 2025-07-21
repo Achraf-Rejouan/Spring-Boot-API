@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
     @Bean
-    public MyFirstClass hello(){
+    public MyFirstClass myFirstBean(){
         return new MyFirstClass("First Bean");
     }
 }
