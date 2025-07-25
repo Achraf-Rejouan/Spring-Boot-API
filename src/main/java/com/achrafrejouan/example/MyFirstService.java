@@ -25,6 +25,10 @@ public class MyFirstService {
         return environment.getProperty("os.name");
     }
 
+    public String readProp  (){
+        return environment.getProperty("my.custom.property");
+    }
+
     public String tellAStory(){
         return "The dependency is saying : " + myFirstClass.sayHello();
     }
