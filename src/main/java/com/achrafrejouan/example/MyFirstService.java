@@ -9,16 +9,12 @@ import org.springframework.stereotype.Service;
 @PropertySource("classpath:custom.properties")
 public class MyFirstService {
     private final MyFirstClass myFirstClass;
-
-
-    @Value("The Nemesis Of Life")
+    @Value("${my.custom.property}")
     private String customProperty;
 
-    @Value("${my.prop}")
-    private String customPropertyFromAnotherFile;
 
-    @Value("123")
-    private String customPropertyInt;
+    @Value("${my.custom.property.int}")
+    private Integer customProperty2;
 
 
     public MyFirstService(@Qualifier("bean1") MyFirstClass myFirstClass) {
@@ -28,16 +24,11 @@ public class MyFirstService {
     public String tellAStory(){
         return "The dependency is saying : " + myFirstClass.sayHello();
     }
+
     public String getCustomProperty() {
         return customProperty;
     }
-
-    public String getCustomPropertyFromAnotherFile() {
-        return customPropertyFromAnotherFile;
+    public Integer getCustomProperty2() {
+        return customProperty2;
     }
-
-    public String getCustomPropertyInt() {
-        return customPropertyInt;
-    }
-
 }
