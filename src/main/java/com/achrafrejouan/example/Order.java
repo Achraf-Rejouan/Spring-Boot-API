@@ -1,7 +1,11 @@
 package com.achrafrejouan.example;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Order {
+    @JsonProperty("identifier")
     private String id;
+    @JsonProperty("product-name")
     private String product;
     private int quantity;
 
