@@ -1,7 +1,7 @@
 package com.achrafrejouan.example;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FirstController {
@@ -9,8 +9,10 @@ public class FirstController {
     public String hello() {
         return "Hello, World!";
     }
-    @GetMapping("/hello2")
-    public String hello2() {
-        return "Hello form my first controller!";
+    @PostMapping("/post")
+    public String post(@RequestBody String body) {
+        return "Post request received : " + body;
     }
+
 }
+
