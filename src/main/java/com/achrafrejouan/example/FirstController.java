@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FirstController {
-    @GetMapping("/hello")
+    //@GetMapping("/hello")
     public String hello() {
         return "Hello, World!";
     }
@@ -27,6 +27,12 @@ public class FirstController {
     @GetMapping("/hello/{name}")
     public String helloName(@PathVariable("name") String UserName) {
         return "Hello, " + UserName + "!";
+    }
+    //3:11:19
+    @GetMapping("/hello")
+    public String helloNameParam(@RequestParam("name") String UserName,
+    @RequestParam("last") String LastName) {
+        return "Hello, " + UserName + " " + LastName + "!";
     }
 }
 
