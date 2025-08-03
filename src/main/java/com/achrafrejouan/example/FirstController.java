@@ -24,5 +24,9 @@ public class FirstController {
         return "Post orders : " + order.toString();
     }
 
+    @GetMapping("/hello/{name}")
+    public String helloName(@PathVariable("name") String UserName) {
+        return "Hello, " + UserName + "!";
+    }
 }
 
