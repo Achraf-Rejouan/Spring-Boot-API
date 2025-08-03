@@ -19,5 +19,10 @@ public class FirstController {
         return "Post orders : " + order.toString();
     }
 
+    @PostMapping("/post-order-record")
+    public String postRecord(@RequestBody OrderRecord order) {
+        return "Post orders : " + order.toString();
+    }
+
 }
 
