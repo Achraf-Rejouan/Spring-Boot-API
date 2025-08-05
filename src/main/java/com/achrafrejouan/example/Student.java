@@ -1,17 +1,21 @@
 package com.achrafrejouan.example;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-
+@Table(name = "students")
 public class Student {
     @Id
+    @GeneratedValue
     private Integer id;
+    @Column(name = "first_name", length = 20)
     private String firstName;
     private String lastName;
+    @Column(unique = true, nullable = false)
     private String email;
     private int age;
+    @Column(updatable = false)
+    private String createdAt;
 
     public Student() {
     }
