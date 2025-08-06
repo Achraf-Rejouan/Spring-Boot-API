@@ -28,5 +28,18 @@ public class FirstController {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
     }
+
+    @GetMapping("/students/search/{lastName}")
+    public List<Student> findStudentsByLastName(@PathVariable String lastName) {
+        return repository.findAllByLastNameContaining(lastName);
+    }
+
+    @DeleteMapping("/students/{id}")
+    public void deleteStudent(@PathVariable Integer id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Student not found with id: " + id);
+        }
+        repository.deleteById(id);
+    }
 }
 
