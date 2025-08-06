@@ -4,15 +4,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FirstController {
-    //@GetMapping("/hello")
-    public String hello() {
-        return "Hello, World!";
+    private final StudentRepository repository;
+
+    public FirstController(StudentRepository repository) {
+        this.repository = repository;
     }
 
-    @PostMapping("/post")
-    public String post(@RequestBody String body) {
-        return "Post request received : " + body;
+    @PostMapping("/students")
+    public Student post(@RequestBody Student student) {
+        // Save the student to the repository
+        return repository.save(student);
     }
-    //3:28:57
 }
 
