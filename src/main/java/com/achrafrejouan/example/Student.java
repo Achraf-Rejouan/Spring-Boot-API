@@ -3,7 +3,6 @@ package com.achrafrejouan.example;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "students")
 public class Student {
     @Id
     @GeneratedValue
@@ -14,8 +13,13 @@ public class Student {
     @Column(unique = true, nullable = false)
     private String email;
     private int age;
-    @Column(updatable = false)
-    private String createdAt;
+
+    @OneToOne(mappedBy = "student",cascade = CascadeType.ALL)
+    private StudentProfile studentProfile;
+
+    @ManyToOne
+    @JoinColumn(name = "school_id")
+    private School school;
 
     public Student() {
     }
@@ -25,6 +29,22 @@ public class Student {
         this.lastName = lastName;
         this.email = email;
         this.age = age;
+    }
+
+    public StudentProfile getStudentProfile() {
+        return studentProfile;
+    }
+
+    public void setStudentProfile(StudentProfile studentProfile) {
+        this.studentProfile = studentProfile;
+    }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 
     public String getLastName() {
