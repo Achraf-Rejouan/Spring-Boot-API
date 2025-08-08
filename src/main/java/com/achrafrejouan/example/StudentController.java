@@ -13,9 +13,21 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    public Student post(@RequestBody Student student) {
+    public Student post(@RequestBody StudentDto dto) {
         // Save the student to the repository
+        var student = toStudent(dto);
         return repository.save(student);
+    }
+
+    private Student toStudent(StudentDto dto) {
+        var newStudent = new Student();
+        newStudent.setFirstName(dto.firstName());
+        newStudent.setLastName(dto.lastName());
+        newStudent.setEmail(dto.email());
+        var school = new School();
+        school.setId(dto.schoolId());
+        newStudent.setSchool(school);
+        return newStudent;
     }
 
     @GetMapping("/students")
