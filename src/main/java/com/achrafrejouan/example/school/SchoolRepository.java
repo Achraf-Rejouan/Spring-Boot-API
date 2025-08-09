@@ -1,4 +1,4 @@
-package com.achrafrejouan.example;
+package com.achrafrejouan.example.school;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

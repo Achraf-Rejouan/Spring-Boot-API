@@ -1,5 +1,6 @@
-package com.achrafrejouan.example;
+package com.achrafrejouan.example.student;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    public StudentResponseDto saveStudent(@RequestBody StudentDto dto) {
+    public StudentResponseDto saveStudent(@Valid @RequestBody StudentDto dto) {
         return this.studentService.saveStudent(dto);
     }
 

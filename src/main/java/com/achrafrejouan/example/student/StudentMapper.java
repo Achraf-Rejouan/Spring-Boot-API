@@ -1,5 +1,6 @@
-package com.achrafrejouan.example;
+package com.achrafrejouan.example.student;
 
+import com.achrafrejouan.example.school.School;
 import org.springframework.stereotype.Service;
 
 @Service

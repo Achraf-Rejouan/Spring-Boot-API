@@ -1,5 +1,6 @@
-package com.achrafrejouan.example;
+package com.achrafrejouan.example.school;
 
+import com.achrafrejouan.example.student.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 

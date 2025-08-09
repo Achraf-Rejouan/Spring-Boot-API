@@ -1,5 +1,6 @@
-package com.achrafrejouan.example;
+package com.achrafrejouan.example.studentProfile;
 
+import com.achrafrejouan.example.student.Student;
 import jakarta.persistence.*;
 
 @Entity

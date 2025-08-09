@@ -1,4 +1,4 @@
-package com.achrafrejouan.example;
+package com.achrafrejouan.example.student;
 
 public record StudentResponseDto(
         String firstName,
