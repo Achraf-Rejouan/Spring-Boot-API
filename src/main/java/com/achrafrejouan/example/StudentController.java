@@ -6,61 +6,35 @@ import java.util.List;
 
 @RestController
 public class StudentController {
-    private final StudentRepository repository;
+    private final StudentService studentService;
 
-    public StudentController(StudentRepository repository) {
-        this.repository = repository;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @PostMapping("/students")
-    public StudentResponseDto post(@RequestBody StudentDto dto) {
-        // Save the student to the repository
-        var student = toStudent(dto);
-        var savedStudent = repository.save(student);
-        return toResponseDto(savedStudent);
-    }
-
-    private Student toStudent(StudentDto dto) {
-        var newStudent = new Student();
-        newStudent.setFirstName(dto.firstName());
-        newStudent.setLastName(dto.lastName());
-        newStudent.setEmail(dto.email());
-        var school = new School();
-        school.setId(dto.schoolId());
-        newStudent.setSchool(school);
-        return newStudent;
-    }
-
-    private StudentResponseDto toResponseDto(Student student) {
-        return new StudentResponseDto(
-                student.getFirstName(),
-                student.getLastName(),
-                student.getEmail()
-        );
+    public StudentResponseDto saveStudent(@RequestBody StudentDto dto) {
+        return this.studentService.saveStudent(dto);
     }
 
     @GetMapping("/students")
-    public List<Student> findAllStudents() {
-        return repository.findAll();
+    public List<StudentResponseDto> findAllStudents() {
+        return this.studentService.findAllStudents();
     }
 
     @GetMapping("/students/{id}")
-    public Student findStudentById(@PathVariable Integer id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+    public StudentResponseDto findStudentById(@PathVariable Integer id) {
+        return this.studentService.findStudentById(id);
     }
 
     @GetMapping("/students/search/{lastName}")
-    public List<Student> findStudentsByLastName(@PathVariable String lastName) {
-        return repository.findAllByLastNameContaining(lastName);
+    public List<StudentResponseDto> findStudentsByLastName(@PathVariable String lastName) {
+        return this.studentService.findStudentsByLastName(lastName);
     }
 
     @DeleteMapping("/students/{id}")
     public void deleteStudent(@PathVariable Integer id) {
-        if (!repository.existsById(id)) {
-            throw new RuntimeException("Student not found with id: " + id);
-        }
-        repository.deleteById(id);
+        this.studentService.deleteStudent(id);
     }
 }
 
