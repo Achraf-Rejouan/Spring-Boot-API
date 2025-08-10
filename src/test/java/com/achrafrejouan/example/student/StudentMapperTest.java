@@ -1,38 +1,47 @@
 package com.achrafrejouan.example.student;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class StudentMapperTest {
 
-    @BeforeAll
-    static void beforeAll() {
-        System.out.println("Running before all tests...");
-    }
-
-    @AfterAll
-    static void afterAll() {
-        System.out.println("Running after all tests...");
-    }
+    private StudentMapper studentMapper;
 
     @BeforeEach
     void setUp() {
-        System.out.println("Setting up the test environment...");
-    }
-
-    @AfterEach
-    void tearDown() {
-        System.out.println("Tearing down the test environment...");
+        studentMapper = new StudentMapper();
     }
 
     @Test
-    public void testmethod1() {
-        System.out.println("Test method 1 is running...");
-    }
-    @Test
-    public void testmethod2() {
-        System.out.println("Test method 2 is running...");
-    }
+     public void testToStudent() {
+        StudentDto dto = new StudentDto(
+                "John",
+                "Doe",
+                "jhon@mail.com",
+                1
+        );
+        Student student = studentMapper.toStudent(dto);
+        assertEquals(dto.firstName(), student.getFirstName());
+        assertEquals(dto.lastName(), student.getLastName());
+        assertEquals(dto.email(), student.getEmail());
+        assertNotNull(student.getSchool());
+        assertEquals(dto.schoolId(), student.getSchool().getId());
+     }
 
+    @Test
+    public void testToResponseDto() {
+        Student student = new Student();
+        student.setFirstName("Jane");
+        student.setLastName("Doe");
+        student.setEmail("jane@gmail.com");
+        student.setAge(20);
+        StudentResponseDto responseDto = studentMapper.toResponseDto(student);
+        assertEquals(student.getFirstName(), responseDto.firstName());
+        assertEquals(student.getLastName(), responseDto.lastName());
+        assertEquals(student.getEmail(), responseDto.email());
+        assertNotNull(responseDto);
+    }
 }
