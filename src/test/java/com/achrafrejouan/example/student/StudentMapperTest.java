@@ -3,8 +3,7 @@ package com.achrafrejouan.example.student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StudentMapperTest {
 
@@ -29,6 +28,13 @@ class StudentMapperTest {
         assertEquals(dto.email(), student.getEmail());
         assertNotNull(student.getSchool());
         assertEquals(dto.schoolId(), student.getSchool().getId());
+     }
+     @Test
+     public void should_throw_null_pointer_exception_when_studentDto_is_null() {
+            var exp = assertThrows(NullPointerException.class, () -> {
+                studentMapper.toStudent(null);
+            });
+            assertEquals("StudentDto cannot be null", exp.getMessage());
      }
 
     @Test
