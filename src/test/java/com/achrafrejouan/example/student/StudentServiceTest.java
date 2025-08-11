@@ -121,4 +121,72 @@ class StudentServiceTest {
         verify(studentMapper, never()).toResponseDto(any());
     }
 
+    @Test
+    void testFindStudentsByLastName() {
+        // Create test data
+        String lastName = "Doe";
+        List<Student> students = List.of(
+                new Student("John", "Doe", "john@gmail.com", 20)
+        );
+        StudentResponseDto expectedDto = new StudentResponseDto("John", "Doe", "john@gmail.com");
+
+        // Mock repository and mapper behavior
+        when(studentRepository.findAllByLastNameContaining(lastName)).thenReturn(students);
+        when(studentMapper.toResponseDto(students.get(0))).thenReturn(expectedDto);
+
+        // Call the service method
+        List<StudentResponseDto> result = studentService.findStudentsByLastName(lastName);
+
+        // Verify the results
+        assertEquals(1, result.size());
+        assertEquals(expectedDto.firstName(), result.get(0).firstName());
+        assertEquals(expectedDto.lastName(), result.get(0).lastName());
+        assertEquals(expectedDto.email(), result.get(0).email());
+        verify(studentRepository).findAllByLastNameContaining(lastName);
+        verify(studentMapper).toResponseDto(students.get(0));
+    }
+
+    @Test
+    void testFindStudentByLastName_NotFound() {
+        // Arrange
+        String lastName = "Doe";
+        when(studentRepository.findAllByLastNameContaining(lastName)).thenReturn(List.of());
+
+        // Act
+        List<StudentResponseDto> result = studentService.findStudentsByLastName(lastName);
+
+        // Assert
+        assertTrue(result.isEmpty());
+        verify(studentRepository).findAllByLastNameContaining(lastName);
+        verify(studentMapper, never()).toResponseDto(any());
+    }
+
+    @Test
+    void testDeleteStudent_Success() {
+        // Arrange
+        Integer studentId = 1;
+        when(studentRepository.existsById(studentId)).thenReturn(true);
+
+        // Act
+        studentService.deleteStudent(studentId);
+
+        // Assert
+        verify(studentRepository).existsById(studentId);
+        verify(studentRepository).deleteById(studentId);
+    }
+
+    @Test
+    void testDeleteStudent_NotFound() {
+        // Arrange
+        Integer studentId = 1;
+        when(studentRepository.existsById(studentId)).thenReturn(false);
+
+        // Act & Assert
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> studentService.deleteStudent(studentId));
+        assertEquals("Student not found with id: " + studentId, exception.getMessage());
+        verify(studentRepository).existsById(studentId);
+        verify(studentRepository, never()).deleteById(any());
+    }
+
 }
